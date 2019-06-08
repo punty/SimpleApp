@@ -15,7 +15,7 @@ final class PostsRouter: NavigationRouter<PostViewModel> {
             let dependencies = DetailsViewModel.Dependencies(post: post, detailsFlow: DetailsFlow(serviceClient: Application.serviceClient, persistenceService: Application.persistenceService))
             let router = DetailsRouter()
             router.context = self.context
-            let viewModel: Attachable<DetailsViewModel> = .detached(dependencies, router: router)
+            let viewModel = DetailsViewModel(dependencies: dependencies, router: router)
             let detailsViewController = DetailsViewController(viewModel: viewModel)
             self.context?.pushViewController(detailsViewController, animated: true)
         }

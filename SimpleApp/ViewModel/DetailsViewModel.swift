@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class DetailsViewModel: ViewModel, RoutableType {
+final class DetailsViewModel: RoutableType {
 
     private var disposeBag = DisposeBag()
 
@@ -40,7 +40,7 @@ final class DetailsViewModel: ViewModel, RoutableType {
     let commentCounter: Driver<String?>
     let detailsTextColor: Driver<UIColor>
 
-    init(dependencies: Dependencies, bindings: Bindings, router: Router?) {
+    init(dependencies: Dependencies, router: Router?) {
         self.dependencies = dependencies
         self.router = router
         title = Driver.just(dependencies.post.title)

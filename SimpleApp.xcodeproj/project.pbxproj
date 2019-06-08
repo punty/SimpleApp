@@ -25,7 +25,6 @@
 		9162904D1FB3B2AE001F4105 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162904C1FB3B2AE001F4105 /* Post.swift */; };
 		9162904F1FB3B6B1001F4105 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162904E1FB3B6B1001F4105 /* Comment.swift */; };
 		916290511FB3B6DA001F4105 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916290501FB3B6DA001F4105 /* User.swift */; };
-		9166FC5B1FB340C600380ECB /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9166FC5A1FB340C600380ECB /* ViewModel.swift */; };
 		9166FC5D1FB35AF000380ECB /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9166FC5C1FB35AF000380ECB /* Router.swift */; };
 		917B6D521FB24A2000AA8BD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917B6D511FB24A2000AA8BD0 /* AppDelegate.swift */; };
 		917B6D591FB24A2000AA8BD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 917B6D581FB24A2000AA8BD0 /* Assets.xcassets */; };
@@ -89,7 +88,6 @@
 		9162904C1FB3B2AE001F4105 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		9162904E1FB3B6B1001F4105 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		916290501FB3B6DA001F4105 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		9166FC5A1FB340C600380ECB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		9166FC5C1FB35AF000380ECB /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		917B6D4E1FB24A2000AA8BD0 /* SimpleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		917B6D511FB24A2000AA8BD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -181,6 +179,7 @@
 		916290531FB3B717001F4105 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				914D47E31FB8704200CB1031 /* Details.swift */,
 				9162904C1FB3B2AE001F4105 /* Post.swift */,
 				9162904E1FB3B6B1001F4105 /* Comment.swift */,
 				916290501FB3B6DA001F4105 /* User.swift */,
@@ -301,7 +300,6 @@
 			children = (
 				9166FC5C1FB35AF000380ECB /* Router.swift */,
 				917B6D7F1FB262A100AA8BD0 /* Application.swift */,
-				9166FC5A1FB340C600380ECB /* ViewModel.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -343,7 +341,6 @@
 			children = (
 				91BF429E1FB5062000F1EE1D /* PostsFlow.swift */,
 				91F25EDB1FB76AC300861F98 /* DetailsFlow.swift */,
-				914D47E31FB8704200CB1031 /* Details.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -554,7 +551,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				91B242421FB4ABB1005E43C1 /* Comment+Persistable.swift in Sources */,
-				9166FC5B1FB340C600380ECB /* ViewModel.swift in Sources */,
 				91F25EDC1FB76AC300861F98 /* DetailsFlow.swift in Sources */,
 				91B673C91FB4955C00640D27 /* RealmPersistenceLayer.swift in Sources */,
 				917B6D801FB262A100AA8BD0 /* Application.swift in Sources */,

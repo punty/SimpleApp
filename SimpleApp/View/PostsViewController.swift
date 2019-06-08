@@ -16,9 +16,9 @@ final class PostsViewController: UIViewController {
 
     private var disposeBag = DisposeBag()
 
-    private var viewModel: Attachable<PostViewModel>
+    private var viewModel: PostViewModel
 
-    init (viewModel: Attachable<PostViewModel>) {
+    init (viewModel: PostViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,12 +35,14 @@ final class PostsViewController: UIViewController {
         super.viewDidLoad()
         title = "Posts"
         registerCell()
-        let modelSelected = postsTableView.rx.modelSelected(PostCellViewModel.self).asDriver()
-        let vm = viewModel.bind(PostViewModel.Bindings(modelSelected: modelSelected))
-        vm.items.drive(postsTableView.rx.items(cellIdentifier: PostTableViewCell.name, cellType: PostTableViewCell.self)) { _, viewModel, cell in
+        postsTableView.rx.modelSelected(PostCellViewModel.self)
+            .subscribe(onNext: { cellViewModel in
+                self.viewModel.modelSelected(cell: cellViewModel.post)
+        }).disposed(by: disposeBag)
+        
+        viewModel.items.drive(postsTableView.rx.items(cellIdentifier: PostTableViewCell.name, cellType: PostTableViewCell.self)) { _, viewModel, cell in
             cell.configure(viewModel: viewModel)
         }
         .disposed(by: disposeBag)
     }
-
 }

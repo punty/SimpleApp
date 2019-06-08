@@ -15,7 +15,8 @@ final class Application {
         let postFlow = PostsFlow(serviceClient: Application.serviceClient, persistenceService: Application.persistenceService)
         let router = PostsRouter()
         router.context = navigationController
-        let viewModel: Attachable<PostViewModel> = .detached(PostViewModel.Dependencies(postsFlow: postFlow), router: router)
+        let dependencies = PostViewModel.Dependencies(postsFlow: postFlow)
+        let viewModel = PostViewModel(dependencies: dependencies, router: router)
         let postViewController = PostsViewController(viewModel: viewModel)
         navigationController.viewControllers = [postViewController]
         return navigationController

@@ -19,9 +19,9 @@ class DetailsViewController: UIViewController {
 
     private var disposeBag = DisposeBag()
 
-    var viewModel: Attachable<DetailsViewModel>
+    var viewModel: DetailsViewModel
 
-    init(viewModel: Attachable<DetailsViewModel>) {
+    init(viewModel: DetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,12 +33,11 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Posts"
-        let bindedViewModel = self.viewModel.bind(DetailsViewModel.Bindings())
-        bindedViewModel.body.drive(postTextView.rx.text).disposed(by: disposeBag)
-        bindedViewModel.title.drive(titleLabel.rx.text).disposed(by: disposeBag)
-        bindedViewModel.user.drive(userLabel.rx.text).disposed(by: disposeBag)
-        bindedViewModel.commentCounter.drive(commentsLabel.rx.text).disposed(by: disposeBag)
-        bindedViewModel.detailsTextColor.drive(onNext: {[unowned self] color in
+        viewModel.body.drive(postTextView.rx.text).disposed(by: disposeBag)
+        viewModel.title.drive(titleLabel.rx.text).disposed(by: disposeBag)
+        viewModel.user.drive(userLabel.rx.text).disposed(by: disposeBag)
+        viewModel.commentCounter.drive(commentsLabel.rx.text).disposed(by: disposeBag)
+        viewModel.detailsTextColor.drive(onNext: {[unowned self] color in
             self.commentsLabel.textColor = color
             self.userLabel.textColor = color
         }).disposed(by: disposeBag)

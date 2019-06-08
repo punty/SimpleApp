@@ -10,7 +10,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-final class PostViewModel: ViewModel, RoutableType {
+final class PostViewModel: RoutableType {
     typealias Router = PostsRouter
 
     private var disposeBag = DisposeBag()
@@ -23,17 +23,13 @@ final class PostViewModel: ViewModel, RoutableType {
     struct Dependencies {
         let postsFlow: PostFlowType
     }
-
-    struct Bindings {
-        let modelSelected: Driver<PostCellViewModel>
-    }
-
+    
     var router: PostsRouter?
 
     // MARK: - Output
     let items: Driver<[PostCellViewModel]>
 
-    init(dependencies: Dependencies, bindings: Bindings, router: Router?) {
+    init(dependencies: Dependencies, router: Router?) {
         self.router = router
         self.dependencies = dependencies
 
@@ -44,9 +40,9 @@ final class PostViewModel: ViewModel, RoutableType {
         }
         .asDriver(onErrorJustReturn: [])
         .startWith([])
-
-        bindings.modelSelected.drive(onNext: { [unowned self] cellViewModel in
-            self.router?.route(route: .showDetails(post: cellViewModel.post))
-        }).disposed(by: disposeBag)
+    }
+    
+    func modelSelected(cell: Post) {
+        self.router?.route(route: .showDetails(post: cell))
     }
 }
