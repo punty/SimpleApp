@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-extension ServiceClientType {
+extension ServiceClientProtocol {
     func get<T: Codable>(api: API) -> Observable <T> {
         return Observable.create { obs in
            let task = self.get(api: api) { (result: Result<T, ServiceError>) in

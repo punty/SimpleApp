@@ -10,6 +10,6 @@ import Foundation
 
 struct ApplicationServices {
     // MARK: - Services
-    let serviceClient: ServiceClientType = ServiceClient()
+    let serviceClient: ServiceClientProtocol = ServiceClient()
     let persistenceService: PersistenceServiceProtocol = RealmPersistence()
 }

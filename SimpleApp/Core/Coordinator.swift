@@ -8,13 +8,13 @@
 
 import UIKit
 
-public protocol Coordinator: class {
+protocol Coordinator: class {
     var name: String { get }
     var sceneRoot: UINavigationController { get }
     func start()
 }
 
-public extension Coordinator {
+extension Coordinator {
     var name: String {
         return String(describing: self)
     }

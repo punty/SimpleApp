@@ -18,10 +18,10 @@ protocol DetailsFlowProtocol {
 
 final class DetailsFlow: DetailsFlowProtocol {
 
-    private let serviceClient: ServiceClientType
+    private let serviceClient: ServiceClientProtocol
     private let persistenceService: PersistenceServiceProtocol
 
-    init (serviceClient: ServiceClientType, persistenceService: PersistenceServiceProtocol) {
+    init (serviceClient: ServiceClientProtocol, persistenceService: PersistenceServiceProtocol) {
         self.serviceClient = serviceClient
         self.persistenceService = persistenceService
     }

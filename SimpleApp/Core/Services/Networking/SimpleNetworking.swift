@@ -19,7 +19,7 @@ protocol DataTask {
 
 extension URLSessionTask: DataTask {}
 
-protocol ServiceClientType {
+protocol ServiceClientProtocol {
     func get<T: Codable>(api: API, completion: @escaping (Result<T, ServiceError>) -> Void) -> DataTask
 }
 
@@ -28,7 +28,7 @@ protocol API {
     func path() -> String
 }
 
-final class ServiceClient: ServiceClientType {
+final class ServiceClient: ServiceClientProtocol {
     
     lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.default

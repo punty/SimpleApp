@@ -16,7 +16,7 @@ final class DataSpy: DataTask {
     }
 }
 
-final class StubNetworkingService: ServiceClientType {
+final class StubNetworkingService: ServiceClientProtocol {
     enum StubError: Error {
         case testError
     }
