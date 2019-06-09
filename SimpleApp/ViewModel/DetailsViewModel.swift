@@ -12,16 +12,12 @@ import RxCocoa
 
 final class DetailsViewModel {
 
-    private var disposeBag = DisposeBag()
-
-    var dependencies: Dependencies
-
     struct Dependencies {
         let post: Post
         let detailsFlow: DetailsFlowProtocol
     }
+    var dependencies: Dependencies
 
-   
     // MARK: - Output
     let title: Driver<String>
     let body: Driver<String>
@@ -59,4 +55,7 @@ final class DetailsViewModel {
             return .black
         }.asDriver(onErrorJustReturn: .red)
     }
+    
+    // MARK: - Private
+    private var disposeBag = DisposeBag()
 }

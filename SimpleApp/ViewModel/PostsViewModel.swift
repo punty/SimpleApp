@@ -11,18 +11,12 @@ import RxCocoa
 import RxSwift
 
 final class PostViewModel {
-  
-    private var disposeBag = DisposeBag()
-
-    enum Routes {
-        case showDetails (post: Post)
-    }
-
-    var dependencies: Dependencies
-    weak var flowDelegate: PostsFlowControllerDelegate?
+    
     struct Dependencies {
         let postsFlow: PostFlowProtocol
     }
+    var dependencies: Dependencies
+    weak var flowDelegate: PostsFlowControllerDelegate?
     
     // MARK: - Output
     let items: Driver<[PostCellViewModel]>
@@ -42,4 +36,7 @@ final class PostViewModel {
     func modelSelected(model: Post) {
         flowDelegate?.showDetails(post: model)
     }
+    
+    // MARK: - Private
+    private var disposeBag = DisposeBag()
 }

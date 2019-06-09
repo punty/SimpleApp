@@ -11,7 +11,6 @@ import Foundation
 enum PostsAPI: String, API {
     
     static let baseURLString = "http://jsonplaceholder.typicode.com/"
-
     case posts
     case users
     case comments
@@ -19,7 +18,7 @@ enum PostsAPI: String, API {
     func path() -> String {
         return rawValue
     }
-
+    
     func asURLRequest() -> URLRequest {
         let urlString = PostsAPI.baseURLString + path()
         let url = URL(string: urlString)

@@ -9,7 +9,6 @@
 import Foundation
 import RxSwift
 
-
 extension PersistenceServiceProtocol {
     func fetch<T: Persistable>(predicate: NSPredicate?,
                                sortDescriptors: [NSSortDescriptor]) -> Observable<FetchedResults<T>> {

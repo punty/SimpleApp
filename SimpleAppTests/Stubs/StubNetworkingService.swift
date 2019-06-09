@@ -10,31 +10,34 @@ import Foundation
 @testable import SimpleApp
 
 final class DataSpy: DataTask {
+    var count: Int = 0
     func cancel() {
-        //no op
+        count += 1
     }
 }
 
 final class StubNetworkingService: ServiceClientType {
-
     enum StubError: Error {
         case testError
     }
 
     let fails: Bool
+    
+    var dataTaskSpy: DataSpy
 
-    init(fails: Bool = false) {
+    init(fails: Bool = false, dataTaskSpy: DataSpy) {
         self.fails = fails
+        self.dataTaskSpy = dataTaskSpy
     }
     
     func get<T>(api: API, completion: @escaping (Result<T, ServiceError>) -> Void) -> DataTask where T : Decodable, T : Encodable {
         if fails {
             completion(.failure(.networkError))
-            return DataSpy()
+            return dataTaskSpy
         }
         let stubData = api.stubResponse()
         let objects = try! JSONDecoder().decode(T.self, from: stubData)
         completion(.success(objects))
-        return DataSpy()
+        return dataTaskSpy
     }
 }

@@ -182,6 +182,7 @@
 		916290531FB3B717001F4105 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				91B2423E1FB4AB8C005E43C1 /* ManagedObject */,
 				914D47E31FB8704200CB1031 /* Details.swift */,
 				9162904C1FB3B2AE001F4105 /* Post.swift */,
 				9162904E1FB3B6B1001F4105 /* Comment.swift */,
@@ -217,8 +218,9 @@
 			isa = PBXGroup;
 			children = (
 				91B673CC1FB4A4EF00640D27 /* Core */,
+				91B673CD1FB4A52000640D27 /* RealmPersistenceLayer */,
+				91BEC61622AD6AF7004B196D /* ServiceAdapters */,
 				91BEC61722AD72AA004B196D /* ApplicationServices */,
-				91BEC61622AD6AF7004B196D /* AdapterLayer */,
 				916290531FB3B717001F4105 /* Model */,
 				91F25ECC1FB7501300861F98 /* View */,
 				915131D81FB71A36001F0659 /* ViewModel */,
@@ -277,28 +279,27 @@
 			path = ManagedObject;
 			sourceTree = "<group>";
 		};
-		91B673CA1FB4A4A000640D27 /* NetworkingLayer */ = {
+		91B673CA1FB4A4A000640D27 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
 				916290481FB3A29C001F4105 /* SimpleNetworking.swift */,
 			);
-			path = NetworkingLayer;
+			path = Networking;
 			sourceTree = "<group>";
 		};
-		91B673CB1FB4A4BA00640D27 /* PersistenceLayer */ = {
+		91B673CB1FB4A4BA00640D27 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
 				91B673CE1FB4A54000640D27 /* Persistable.swift */,
 				91B673C61FB4867A00640D27 /* PersistenceService.swift */,
-				91B673CD1FB4A52000640D27 /* RealmPersistenceLayer */,
 			);
-			path = PersistenceLayer;
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		91B673CC1FB4A4EF00640D27 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				91BF42A61FB51A9300F1EE1D /* ServiceLayer */,
+				91BF42A61FB51A9300F1EE1D /* Services */,
 				91BEC60822AC7DB2004B196D /* Coordinator.swift */,
 			);
 			path = Core;
@@ -307,20 +308,19 @@
 		91B673CD1FB4A52000640D27 /* RealmPersistenceLayer */ = {
 			isa = PBXGroup;
 			children = (
-				91B2423E1FB4AB8C005E43C1 /* ManagedObject */,
 				91B673C81FB4955C00640D27 /* RealmPersistenceLayer.swift */,
 				91B673D21FB4A5CA00640D27 /* FetchedResult.swift */,
 			);
 			path = RealmPersistenceLayer;
 			sourceTree = "<group>";
 		};
-		91BEC61622AD6AF7004B196D /* AdapterLayer */ = {
+		91BEC61622AD6AF7004B196D /* ServiceAdapters */ = {
 			isa = PBXGroup;
 			children = (
 				91BEC61222AD64E5004B196D /* RxPersistence.swift */,
 				91BEC61422AD6937004B196D /* RxNetworking.swift */,
 			);
-			path = AdapterLayer;
+			path = ServiceAdapters;
 			sourceTree = "<group>";
 		};
 		91BEC61722AD72AA004B196D /* ApplicationServices */ = {
@@ -333,13 +333,13 @@
 			path = ApplicationServices;
 			sourceTree = "<group>";
 		};
-		91BF42A61FB51A9300F1EE1D /* ServiceLayer */ = {
+		91BF42A61FB51A9300F1EE1D /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				91B673CA1FB4A4A000640D27 /* NetworkingLayer */,
-				91B673CB1FB4A4BA00640D27 /* PersistenceLayer */,
+				91B673CA1FB4A4A000640D27 /* Networking */,
+				91B673CB1FB4A4BA00640D27 /* Persistence */,
 			);
-			path = ServiceLayer;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		91F25ECC1FB7501300861F98 /* View */ = {

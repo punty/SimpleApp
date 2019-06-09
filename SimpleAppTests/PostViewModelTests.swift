@@ -13,11 +13,9 @@ import RxCocoa
 
 @testable import SimpleApp
 
-final class MockDel: PostsFlowControllerDelegate {
-    func showDetails(post: Post) {
+final class FakePostsFlowControllerDelegate: PostsFlowControllerDelegate {
+        func showDetails(post: Post) {
     }
-    
-    
 }
 
 final class PostViewModelTests: XCTestCase {
@@ -31,12 +29,13 @@ final class PostViewModelTests: XCTestCase {
     }
     
     func testItems() {
-        let serviceClient = StubNetworkingService()
+        let dataSpy = DataSpy()
+        let serviceClient = StubNetworkingService(dataTaskSpy: dataSpy)
         let post = Post(userId: 0, postId: 0, title: "title", body: "body")
         let persistence = StubStorageService(items: [post])
         let postFlow = PostsFlow(serviceClient: serviceClient, persistenceService: persistence)
         let dependencies = PostViewModel.Dependencies(postsFlow: postFlow)
-        let postViewModel = PostViewModel(dependencies: dependencies, flowDelegate: MockDel())
+        let postViewModel = PostViewModel(dependencies: dependencies, flowDelegate: FakePostsFlowControllerDelegate())
         SharingScheduler.mock(scheduler: testScheduler.scheduler) {
             let observer = testScheduler.scheduler.createObserver([PostCellViewModel].self)
             postViewModel.items.asObservable().subscribe(observer).disposed(by: disposeBag)
@@ -52,12 +51,13 @@ final class PostViewModelTests: XCTestCase {
 
     //if online we fetch the post we have in our storage
     func testOfflineFromCache() {
-        let serviceClient = StubNetworkingService(fails: true)
+        let dataSpy = DataSpy()
+        let serviceClient = StubNetworkingService(fails:true, dataTaskSpy: dataSpy)
         let post = Post(userId: 0, postId: 0, title: "MockStorage", body: "Mock")
         let persistence = StubStorageService(items: [post])
         let postFlow = PostsFlow(serviceClient: serviceClient, persistenceService: persistence)
         let dependencies = PostViewModel.Dependencies(postsFlow: postFlow)
-        let postViewModel = PostViewModel(dependencies: dependencies, flowDelegate: MockDel())
+        let postViewModel = PostViewModel(dependencies: dependencies, flowDelegate: FakePostsFlowControllerDelegate())
         SharingScheduler.mock(scheduler: testScheduler.scheduler) {
             let observer = testScheduler.scheduler.createObserver([PostCellViewModel].self)
             postViewModel.items.asObservable().subscribe(observer).disposed(by: disposeBag)
@@ -71,4 +71,20 @@ final class PostViewModelTests: XCTestCase {
         }
     }
 
+    func testTaskCancelIsCalledWhenCompleted() {
+        let dataSpy = DataSpy()
+        let serviceClient = StubNetworkingService(dataTaskSpy: dataSpy)
+        let post = Post(userId: 0, postId: 0, title: "title", body: "body")
+        let persistence = StubStorageService(items: [post])
+        let postFlow = PostsFlow(serviceClient: serviceClient, persistenceService: persistence)
+        let dependencies = PostViewModel.Dependencies(postsFlow: postFlow)
+        let postViewModel = PostViewModel(dependencies: dependencies, flowDelegate: FakePostsFlowControllerDelegate())
+        SharingScheduler.mock(scheduler: testScheduler.scheduler) {
+            let observer = testScheduler.scheduler.createObserver([PostCellViewModel].self)
+            postViewModel.items.asObservable().subscribe(observer).disposed(by: disposeBag)
+            testScheduler.scheduler.start()
+            XCTAssertEqual(dataSpy.count, 1)
+        }
+    }
+    
 }

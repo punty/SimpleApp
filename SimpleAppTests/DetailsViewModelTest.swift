@@ -25,8 +25,10 @@ final class DetailsViewModelTests: XCTestCase {
         self.testScheduler = SimpleTestScheduler()
     }
 
+    //When Online the test should be black
     func testOnlineBlackText() {
-        let serviceClient = StubNetworkingService()
+        let dataSpy = DataSpy()
+        let serviceClient = StubNetworkingService(dataTaskSpy: dataSpy)
         let items: [Post] = []
         let persistence = StubStorageService(items: items)
         let detailsflow = DetailsFlow(serviceClient: serviceClient, persistenceService: persistence)
