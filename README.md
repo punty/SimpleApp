@@ -19,3 +19,5 @@ I included a tests with few test cases, I didn't write all the test case because
 - iPad
 - Very simple UI/UX
 
+## Details
+- Tested on XCode 10.2.1 
