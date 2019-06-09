@@ -18,8 +18,7 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
 
     private var disposeBag = DisposeBag()
-
-    var viewModel: DetailsViewModel
+    private var viewModel: DetailsViewModel
 
     init(viewModel: DetailsViewModel) {
         self.viewModel = viewModel

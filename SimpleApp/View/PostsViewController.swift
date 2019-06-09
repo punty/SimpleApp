@@ -15,7 +15,6 @@ final class PostsViewController: UIViewController {
     @IBOutlet private weak var postsTableView: UITableView!
 
     private var disposeBag = DisposeBag()
-
     private var viewModel: PostViewModel
 
     init (viewModel: PostViewModel) {
@@ -37,7 +36,7 @@ final class PostsViewController: UIViewController {
         registerCell()
         postsTableView.rx.modelSelected(PostCellViewModel.self)
             .subscribe(onNext: { cellViewModel in
-                self.viewModel.modelSelected(cell: cellViewModel.post)
+                self.viewModel.modelSelected(model: cellViewModel.post)
         }).disposed(by: disposeBag)
         
         viewModel.items.drive(postsTableView.rx.items(cellIdentifier: PostTableViewCell.name, cellType: PostTableViewCell.self)) { _, viewModel, cell in

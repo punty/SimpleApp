@@ -10,9 +10,8 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-final class PostViewModel: RoutableType {
-    typealias Router = PostsRouter
-
+final class PostViewModel {
+  
     private var disposeBag = DisposeBag()
 
     enum Routes {
@@ -20,19 +19,17 @@ final class PostViewModel: RoutableType {
     }
 
     var dependencies: Dependencies
+    weak var flowDelegate: PostsFlowControllerDelegate?
     struct Dependencies {
-        let postsFlow: PostFlowType
+        let postsFlow: PostFlowProtocol
     }
     
-    var router: PostsRouter?
-
     // MARK: - Output
     let items: Driver<[PostCellViewModel]>
 
-    init(dependencies: Dependencies, router: Router?) {
-        self.router = router
+    init(dependencies: Dependencies, flowDelegate: PostsFlowControllerDelegate) {
         self.dependencies = dependencies
-
+        self.flowDelegate = flowDelegate
         let update = dependencies.postsFlow.updatePost().share()
 
         items = update.map { posts in
@@ -42,7 +39,7 @@ final class PostViewModel: RoutableType {
         .startWith([])
     }
     
-    func modelSelected(cell: Post) {
-        self.router?.route(route: .showDetails(post: cell))
+    func modelSelected(model: Post) {
+        flowDelegate?.showDetails(post: model)
     }
 }

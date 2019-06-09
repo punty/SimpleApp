@@ -12,19 +12,8 @@ import Foundation
 extension API {
     func stubResponse() -> Data {
         let bundle = Bundle(for: PostViewModelTests.self)
-        switch self {
-        case .comments:
-            let fileUrl = bundle.url(forResource: "comments", withExtension: "json")!
-            let data = try! Data(contentsOf: fileUrl)
-            return data
-        case .posts:
-            let fileUrl = bundle.url(forResource: "posts", withExtension: "json")!
-            let data = try! Data(contentsOf: fileUrl)
-            return data
-        case .users:
-            let fileUrl = bundle.url(forResource: "users", withExtension: "json")!
-            let data = try! Data(contentsOf: fileUrl)
-            return data
-        }
+        let fileUrl = bundle.url(forResource: path(), withExtension: "json")!
+        let data = try! Data(contentsOf: fileUrl)
+        return data
     }
 }

@@ -25,23 +25,19 @@ final class DetailsViewModelTests: XCTestCase {
         self.testScheduler = SimpleTestScheduler()
     }
 
-    override func tearDown() {
-        super.tearDown()
-    }
-
     func testOnlineBlackText() {
-        let serviceClient = StubNetworkingService(testScheduler: testScheduler)
-        let persistence = StubEmptyStorage(testScheduler: testScheduler)
+        let serviceClient = StubNetworkingService()
+        let items: [Post] = []
+        let persistence = StubStorageService(items: items)
         let detailsflow = DetailsFlow(serviceClient: serviceClient, persistenceService: persistence)
         let post = Post(userId: 0, postId: 0, title: "title", body: "body")
         let dependencies = DetailsViewModel.Dependencies(post: post, detailsFlow: detailsflow)
-        let bindings = DetailsViewModel.Bindings()
-        let detailsViewModel = DetailsViewModel(dependencies: dependencies, bindings: bindings, router: nil)
+        let detailsViewModel = DetailsViewModel(dependencies: dependencies)
         SharingScheduler.mock(scheduler: testScheduler.scheduler) {
             let observer = testScheduler.scheduler.createObserver(UIColor.self)
             detailsViewModel.detailsTextColor.asObservable().subscribe(observer).disposed(by: disposeBag)
             testScheduler.scheduler.start()
-            XCTAssertTrue(observer.events[0].value.element == UIColor.black)
+            XCTAssertEqual(observer.events[0].value.element, UIColor.black)
         }
     }
 

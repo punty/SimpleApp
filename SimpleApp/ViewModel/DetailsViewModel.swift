@@ -10,29 +10,18 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class DetailsViewModel: RoutableType {
+final class DetailsViewModel {
 
     private var disposeBag = DisposeBag()
-
-    typealias Router = DetailsRouter
-
-    enum Routes {
-        //just a simple app nowhere to go from here
-    }
 
     var dependencies: Dependencies
 
     struct Dependencies {
         let post: Post
-        let detailsFlow: DetailsFlow
+        let detailsFlow: DetailsFlowProtocol
     }
 
-    struct Bindings {
-        //empty no interaction
-    }
-
-    var router: DetailsRouter?
-
+   
     // MARK: - Output
     let title: Driver<String>
     let body: Driver<String>
@@ -40,9 +29,8 @@ final class DetailsViewModel: RoutableType {
     let commentCounter: Driver<String?>
     let detailsTextColor: Driver<UIColor>
 
-    init(dependencies: Dependencies, router: Router?) {
+    init(dependencies: Dependencies) {
         self.dependencies = dependencies
-        self.router = router
         title = Driver.just(dependencies.post.title)
         body = Driver.just(dependencies.post.body)
         let details = dependencies.detailsFlow.updateDetails(for: dependencies.post).share()

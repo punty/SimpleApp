@@ -7,10 +7,13 @@
 //
 
 import Foundation
-import RxTest
-import RxSwift
-
 @testable import SimpleApp
+
+final class DataSpy: DataTask {
+    func cancel() {
+        //no op
+    }
+}
 
 final class StubNetworkingService: ServiceClientType {
 
@@ -18,26 +21,20 @@ final class StubNetworkingService: ServiceClientType {
         case testError
     }
 
-    let testScheduler: SimpleTestScheduler
     let fails: Bool
 
-    init(testScheduler: SimpleTestScheduler, fails: Bool = false) {
-        self.testScheduler = testScheduler
+    init(fails: Bool = false) {
         self.fails = fails
     }
-
-    func get<T>(api: API) -> Observable<T> where T: Decodable, T: Encodable {
+    
+    func get<T>(api: API, completion: @escaping (Result<T, ServiceError>) -> Void) -> DataTask where T : Decodable, T : Encodable {
         if fails {
-            let testObservable: TestableObservable<T> = testScheduler.scheduler.createColdObservable([error(1, StubError.testError)])
-            return testObservable.asObservable()
+            completion(.failure(.networkError))
+            return DataSpy()
         }
         let stubData = api.stubResponse()
-        // swiftlint:disable force_try
         let objects = try! JSONDecoder().decode(T.self, from: stubData)
-        // swiftlint:enable force_try
-        let testObservable = testScheduler.scheduler.createColdObservable(
-            [ next( testScheduler.next(), objects),
-              completed(testScheduler.next())])
-        return testObservable.asObservable()
+        completion(.success(objects))
+        return DataSpy()
     }
 }

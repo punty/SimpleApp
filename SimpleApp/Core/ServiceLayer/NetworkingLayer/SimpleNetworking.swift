@@ -13,8 +13,19 @@ enum ServiceError: Error {
     case networkError
 }
 
+protocol DataTask {
+    func cancel()
+}
+
+extension URLSessionTask: DataTask {}
+
 protocol ServiceClientType {
-    func get<T: Codable>(api: API, completion: @escaping (Result<T, ServiceError>) -> Void) -> URLSessionTask
+    func get<T: Codable>(api: API, completion: @escaping (Result<T, ServiceError>) -> Void) -> DataTask
+}
+
+protocol API {
+    func asURLRequest() -> URLRequest
+    func path() -> String
 }
 
 final class ServiceClient: ServiceClientType {
@@ -27,8 +38,8 @@ final class ServiceClient: ServiceClientType {
     }()
     
     
-    func get<T: Codable>(api: API, completion: @escaping (Result<T, ServiceError>) -> Void) -> URLSessionTask {
-        return session.dataTask(with: api.asURLRequest()) { data, _, error in
+    func get<T: Codable>(api: API, completion: @escaping (Result<T, ServiceError>) -> Void) -> DataTask {
+        let dataTask = session.dataTask(with: api.asURLRequest()) { data, _, error in
             guard let unwrappedData = data else {
                 completion(.failure(.networkError))
                 return
@@ -40,5 +51,7 @@ final class ServiceClient: ServiceClientType {
                 completion(.failure(.dataError))
             }
         }
+        dataTask.resume()
+        return dataTask
     }
 }
